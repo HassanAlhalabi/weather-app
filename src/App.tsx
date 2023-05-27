@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { CssBaseline, Grid } from '@mui/material';
+import { ThemeProvider } from 'styled-components';
+
+import darkTheme from './themes/dark';
+import lightTheme from './themes/light';
+import { useRecoilValue } from 'recoil';
+import { themeMode } from './state/theme';
+import { THEME_MODES } from './constants';
+import LayoutContainer from './components/layout-container';
+import Header from './components/header';
+import AddressContainer from './containers/address-details';
+import DaysForcastContainer from './containers/days-forcast';
+import Forcast10DaysContainer from './containers/forcast10-days';
+import Footer from './components/footer';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const theme = useRecoilValue(themeMode)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeProvider theme={theme === THEME_MODES.light ? lightTheme : darkTheme}>
+      <CssBaseline />
+      <LayoutContainer>
+        <Header />
+        <AddressContainer />
+        <Forcast10DaysContainer />
+        <DaysForcastContainer />
+        <Footer />
+      </LayoutContainer>
+    </ThemeProvider>
   )
 }
 
